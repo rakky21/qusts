@@ -1,29 +1,33 @@
 var body = document.body;
-
+var questnum = 1
 // for loop?
 var h1El = document.createElement('h1');
 h1El.textContent = "Press the button when you are ready to start the challenge!";
 h1El.setAttribute('style', 'margin:auto; width:50%; text-align:center');
-body.appendChild(h1El);
+document.querySelector(".container").appendChild(h1El);
 
 var btnEl = document.createElement('button');
 btnEl.textContent = "Begin";
-btnEl.setAttribute('style', 'width:5%;background:#0000FF; color:#FFD700');
-body.appendChild(btnEl);
+btnEl.setAttribute('style', 'width:5%;background:#0000FF; color:#FFD700;');
+document.querySelector(".container").appendChild(btnEl);
 btnEl.addEventListener('click', startGame)
 // var startBtn = document.getElementById("startBtn");
 // startBtn.addEventListener("click",startGame)
 function startGame() {
   startCountdown = setInterval(countdown, 1000);
+  btnEl.classList.add("hidden")
+  h1El.classList.add("hidden")
+  document.querySelector("#question"+questnum).classList.remove('hidden')
 }
 
 var h2El = document.createElement('h2');
 h2El.textContent = "High Score List:";
 h2El.setAttribute('style', 'margin:25px; width:100%; text-align:center;');
+h2El.classList.add("hidden")
 body.appendChild(h2El);
 
 // set seconds to minutes
-var counter = 600
+var counter = 60
 var startCountdown;
 var countdown = function () {
 
@@ -31,35 +35,95 @@ var countdown = function () {
   var timer = document.getElementById("timer");
   timer.textContent = counter
   if (counter === 0) {
-    clearInterval(startCountdown);
+   gameOver()
   };
 };
 
+document.querySelectorAll("li").forEach(function(li){
+  li.addEventListener("click", changeQuestions)
+})
 
-var score = 0;
-
-for (var i = 0; i < questions.length; i++) {
-
-  var ul = questionslist
-  var ol = answerslist
-
-  var startQuestions;
-  var questions = function () {
-    
-    ul++;
-    var questionslist = document.getElementById("questone");
-    questionslist.textContent = ul
-    if (ul === firstanswer) {
-      score++;
-      alert('corect!');
-    } else {
-      ('Wrong!');
-    }
+function changeQuestions (event) {
+  // check if answer is correct
+  var correct = event.target.dataset.correct
+  console.log(correct)
+  // if false take 10 secs.
+  if(correct === "false"){
+    counter = counter - 10
+    var timer = document.getElementById("timer");
+    timer.textContent = counter
   }
-  function startGame() {
-    startQuestions = setInterval(quests);
-  }
+  document.querySelector("#question"+questnum).classList.add('hidden')
+  questnum++
+  // check if there's a question 
+  if(questnum === 3) {
+  gameOver()
+  } else {
+  document.querySelector("#question"+questnum).classList.remove('hidden')
 }
+}
+
+function gameOver(){
+// highscore
+clearInterval(startCountdown);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// for (var i = 0; i < questions.length; i++) {
+
+  // var ul = questionslist
+  // var ol = answerslist
+
+  // var startQuestions;
+  // var questions = function () {
+    
+  //   ul++;
+  //   var questionslist = document.getElementById("questone");
+  //   questionslist.textContent = ul
+  //   if (ul === firstanswer) {
+  //     score++;
+  //     alert('corect!');
+  //   } else {
+  //     ('Wrong!');
+  //   }
+  // }
+
+// }
 
 // // FINISH when it reaches 0 = give total score.
 // // if wrong then subtract from the total time.
