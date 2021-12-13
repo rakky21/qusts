@@ -56,7 +56,7 @@ function changeQuestions (event) {
   document.querySelector("#question"+questnum).classList.add('hidden')
   questnum++
   // check if there's a question 
-  if(questnum === 3) {
+  if(questnum === 6) {
   gameOver()
   } else {
   document.querySelector("#question"+questnum).classList.remove('hidden')
