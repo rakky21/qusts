@@ -66,6 +66,7 @@ function changeQuestions (event) {
 function gameOver(){
 // highscore
 clearInterval(startCountdown);
+document.querySelector("#question"+questnum).classList.remove('hidden')
 
 }
 
